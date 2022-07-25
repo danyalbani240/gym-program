@@ -1,12 +1,22 @@
 <script setup>
 import { XCircleIcon } from "@heroicons/vue/outline";
 import BaseForm from "./BaseForm.vue";
-import { ref } from "vue";
+import ProgramForm from "./ProgramForm.vue";
+import { ref, shallowRef } from "vue";
+//emits
+
 defineEmits(["close"]);
+// refs
+const component = shallowRef(BaseForm);
+//methods
 function handleHowDay() {
-	console.log(5);
+	changeComponent("next");
 }
-const component = BaseForm;
+const changeComponent = (side) => {
+	if (side === "next") {
+		component.value = ProgramForm;
+	}
+};
 </script>
 <template>
 	<div class="fixed bg-gray-100 left-0 top-0 w-full h-screen p-5">
@@ -15,7 +25,25 @@ const component = BaseForm;
 		</button>
 
 		<div>
-			<component @how-day="handleHowDay" :is="component" />
+			<Transition name="fade" mode="out-in">
+				<component @how-day="handleHowDay" :is="component" />
+			</Transition>
 		</div>
 	</div>
 </template>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+	transition: all 0.5s ease;
+}
+
+.fade-enter-from {
+	opacity: 0;
+	transform: translateX(50px);
+}
+
+.fade-leave-to {
+	opacity: 0;
+	transform: translateX(-100px);
+}
+</style>
