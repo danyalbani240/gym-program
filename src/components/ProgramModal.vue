@@ -8,8 +8,10 @@ import { ref, shallowRef } from "vue";
 defineEmits(["close"]);
 // refs
 const component = shallowRef(BaseForm);
+const daysOfProgram = ref();
 //methods
-function handleHowDay() {
+function handleHowDay(value) {
+	daysOfProgram.value = value;
 	changeComponent("next");
 }
 const changeComponent = (side) => {
@@ -24,9 +26,13 @@ const changeComponent = (side) => {
 			<XCircleIcon class="w-8 text-blue-400" />
 		</button>
 
-		<div>
+		<div class="p-2">
 			<Transition name="fade" mode="out-in">
-				<component @how-day="handleHowDay" :is="component" />
+				<component
+					@how-day="handleHowDay"
+					:day-amount="daysOfProgram"
+					:is="component"
+				/>
 			</Transition>
 		</div>
 	</div>
