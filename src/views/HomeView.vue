@@ -10,5 +10,5 @@ const handleNewProgram = () => {
 </script>
 <template>
 	<Nav @show-program-form="handleNewProgram" />
-	<ProgramModal v-if="isProgramModal" />
+	<ProgramModal @close="isProgramModal = false" v-if="isProgramModal" />
 </template>
